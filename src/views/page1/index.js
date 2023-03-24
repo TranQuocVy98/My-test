@@ -3,7 +3,7 @@ import react from "react";
 import Video from "@/components/Video";
 import useSearchResult from "@/hooks/useSearchResult";
 import ListTicket from "@/components/ListTicket";
-import ListVideo from "@/components/listVideo";
+import ListVideo from "@/components/ListVideo";
 
 export default function HomePage({ search, setIdVideo }) {
     const { isLoading, error, data: searchResults } = useSearchResult({ q: search });
