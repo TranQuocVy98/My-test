@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { Fragment } from "react";
+import base64url from "base64url";
 
 function Menu({ id }) {
     const router = useRouter();
@@ -8,8 +9,9 @@ function Menu({ id }) {
         { name: "感謝の声", link: `/page1` },
         { name: "タイムライン", link: "/page2" },
     ];
-    const queryString = JSON.stringify(id);
+    // const queryString = JSON.stringify(id);
     const handleQueryString = (link) => {
+        const queryString = base64url(JSON.stringify(id));
         if (link === "/") {
             router.push("/");
         } else {
