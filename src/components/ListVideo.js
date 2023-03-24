@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { SkeletonTicket } from "./SkeletonUI";
 
-const ListVideo = ({ width = 275, searchResults, setIdVideo, isLoading }) => {
-    const numColumns = Math.ceil(searchResults?.length / 2);
+const ListVideo = ({ searchResults, setIdVideo, isLoading }) => {
     const handleIdVideo = (id, authorId) => {
         setIdVideo(id, authorId);
     };
@@ -10,15 +9,14 @@ const ListVideo = ({ width = 275, searchResults, setIdVideo, isLoading }) => {
     if (!Array.isArray(searchResults)) return null;
 
     return (
-        <>
+        <div className={`overflow-x-auto w-[375px]`}>
             {searchResults?.length >= 3 ? (
-                <div className={`grid grid-cols-2 grid-rows-${numColumns} gap-x-[210px] overflow-x-auto`}>
-                    {searchResults?.slice(0, 9).map((item) => (
+                <div className={`flex flex-wrap w-[606px]`}>
+                    {searchResults?.map((item) => (
                         <div
                             key={item.videoId}
                             onClick={() => handleIdVideo(item.videoId, item.authorId)}
-                            className={`h-[84px] mt-[20px] ml-[19px] flex bg-bgitems rounded-[8px]`}
-                            style={{ width: `${width}px` }}
+                            className={`h-[84px] w-[275px] mt-[20px] ml-[19px] flex bg-bgitems rounded-[8px]`}
                         >
                             <Image
                                 src={`https://yt.funami.tech/vi/${item.videoId}/1.jpg`}
@@ -39,12 +37,11 @@ const ListVideo = ({ width = 275, searchResults, setIdVideo, isLoading }) => {
                 </div>
             ) : (
                 <div>
-                    {searchResults?.slice(0, 9).map((item) => (
+                    {searchResults?.map((item) => (
                         <div
                             key={item.videoId}
                             onClick={() => HandleIdVideo(item.videoId)}
-                            className={`h-[84px] mt-[20px] ml-[19px] flex bg-bgitems rounded-[8px]`}
-                            style={{ width: `${width}px` }}
+                            className={`h-[84px] w-[343px] mt-[20px] ml-[19px] flex bg-bgitems rounded-[8px]`}
                         >
                             <Image
                                 src={`https://yt.funami.tech/vi/${item.videoId}/1.jpg`}
@@ -65,7 +62,7 @@ const ListVideo = ({ width = 275, searchResults, setIdVideo, isLoading }) => {
                     ))}
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

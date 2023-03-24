@@ -21,7 +21,7 @@ export default function HomePage({ search, setIdVideo }) {
             <div className="w-[343px] h-[199px] bg-background mt-[20px] rounded-[8px] ml-[19px]">
                 <Video videoId={getVideo} isLoading={isLoading} />
             </div>
-            <ListVideo searchResults={searchResults?.slice(0, 11)} setIdVideo={handleIdVideo} isLoading={isLoading} />
+            <ListVideo searchResults={searchResults?.slice(0, 9)} setIdVideo={handleIdVideo} isLoading={isLoading} />
             <div className="mt-[20px]  ml-[19px] text-2xl font-bold leading-9">オーディオ</div>
             <ListAudio />
             <ListAudio />
