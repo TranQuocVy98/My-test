@@ -9,7 +9,9 @@ function RattingPage() {
     const router = useRouter();
     const { id } = router.query;
     const defaultId =
-        typeof id !== "undefined" ? id : JSON.stringify({ id: "eEQoeKGCQ4c", authorId: "UCOvl7YE6sNlUdYXqlb2yXxw" });
+        typeof id !== "undefined"
+            ? id
+            : base64url(JSON.stringify({ id: "eEQoeKGCQ4c", authorId: "UCOvl7YE6sNlUdYXqlb2yXxw" }));
     const data = JSON.parse(base64url.decode(defaultId));
     // const data = JSON.parse(defaultId);
 

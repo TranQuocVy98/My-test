@@ -11,7 +11,7 @@ function TimeLinePage() {
     const defaultId =
         typeof author !== "undefined"
             ? author
-            : JSON.stringify({ id: "eEQoeKGCQ4c", authorId: "UCOvl7YE6sNlUdYXqlb2yXxw" });
+            : base64url(JSON.stringify({ id: "eEQoeKGCQ4c", authorId: "UCOvl7YE6sNlUdYXqlb2yXxw" }));
 
     // const data = JSON.parse(defaultId);
     const data = JSON.parse(base64url.decode(defaultId));
