@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Search from "./search";
+import Search from "./Search";
 import { useDispatch, useSelector } from "react-redux";
 import images from "@/assets/images";
 import numeral from "numeral";
