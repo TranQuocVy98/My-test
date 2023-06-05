@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import YouTube from "react-youtube";
-import { SkeletonVideo } from "./SkeletonUI";
 
-function Video(props) {
+function Video() {
+    const { videoId } = useSelector((state) => state.ListVideo.init);
+
     const opts = {
         height: "200",
         width: "343",
@@ -10,10 +12,6 @@ function Video(props) {
             autoplay: 0,
         },
     };
-
-    const { videoId, isLoading } = props;
-    if (isLoading) return <SkeletonVideo />;
-
     return <YouTube videoId={videoId} opts={opts} />;
 }
 

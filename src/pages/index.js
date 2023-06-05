@@ -1,17 +1,21 @@
 import Header from "@/components/Header";
 import Menu from "@/components/Menu";
-import HomePage from "@/views/page1";
-import { useState } from "react";
+import Video from "@/components/Video";
+import ListVideo from "@/components/ListVideo";
+import ListTicket from "@/components/ListTicket";
+
 export default function Home() {
-    const [id, setId] = useState({ id: "eEQoeKGCQ4c", authorId: "UCOvl7YE6sNlUdYXqlb2yXxw" });
-    const handleIdVideo = (id, authorId) => {
-        setId({ id, authorId });
-    };
     return (
         <>
             <Header />
-            <Menu id={id} />
-            <HomePage search={"nhac-trung-quoc-hay"} setIdVideo={handleIdVideo} />
+            <Menu />
+            <div className="mt-[10px] ml-[19px] text-xl font-bold leading-9">VIDEO</div>
+            <div className="w-[343px] h-[199px] bg-background mt-[10px] rounded-[8px] ml-[19px]">
+                <Video />
+            </div>
+            <ListVideo />
+            <div className="mt-[20px]  ml-[19px] text-xl font-bold leading-9">TOP TRENDING.</div>
+            <ListTicket />
         </>
     );
 }

@@ -1,27 +1,24 @@
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import base64url from "base64url";
 
-function Menu({ id }) {
+function Menu() {
     const router = useRouter();
     const menu = [
-        { name: "プロフィール", link: "/" },
-        { name: "感謝の声", link: `/page1` },
-        { name: "タイムライン", link: "/page2" },
+        { name: "Video", link: "/" },
+        { name: "Comment", link: `/commentPage` },
+        { name: "List", link: "/listVideoPage" },
     ];
-    // const queryString = JSON.stringify(id);
     const handleQueryString = (link) => {
-        const queryString = base64url(JSON.stringify(id));
         if (link === "/") {
             router.push("/");
         } else {
-            router.push({ pathname: `${link}/${queryString} ` });
+            router.push({ pathname: link });
         }
     };
     const route = router.pathname.replace(/\/\[\w+\]/, "");
     return (
         <div className="flex items-center justify-center">
-            <div className="w-[343px] h-[36px] bg-background mt-[38px] rounded-[16px] p-[2px] text-textDate  text-[12px] leading-4 flex flex-row items-center">
+            <div className="w-[343px] h-[36px] bg-background mt-[28px] rounded-[16px] p-[2px] text-textDate  text-[12px] leading-4 flex flex-row items-center">
                 {menu.map((item) => (
                     <Fragment key={item.name}>
                         <div

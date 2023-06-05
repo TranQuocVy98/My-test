@@ -1,18 +1,29 @@
 import { API_ENDPOINTS } from "@/utils/apiClient";
+import useDebounce from "@/hooks/useDebounce";
+import { useEffect, useState } from "react";
 import { axiosInstance } from "@/utils/axiosInStance";
 
-import { useQuery } from "react-query";
+const useSearchResult = ({ search, page = 0, region = "VN", type = "video" }) => {
+    let q = useDebounce(search, 500);
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true);
 
-const useSearchResult = ({ q, page = 0, region = "VN", type = "video" }) => {
-    const { data, isLoading, error } = useQuery(["search", q, page, region, type], async () => {
-        if (!q) {
-            throw new Error("Missing params `q`!");
-        }
-        const res = await axiosInstance.get(API_ENDPOINTS.SEARCH, {
-            params: { q, type, page, region },
-        });
-        return res.data;
-    });
+            try {
+                const res = await axiosInstance.get(API_ENDPOINTS.SEARCH, {
+                    params: { q, page, region, type },
+                });
+                setData(res.data);
+            } catch (error) {
+                setError(error.message);
+            }
+            setIsLoading(false);
+        };
+        fetchData();
+    }, [q, page, region, type]);
 
     return { data, isLoading, error };
 };

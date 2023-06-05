@@ -1,35 +1,41 @@
+import ListVideoSlice from "@/redux/ListVideoSlice/ListVideoSlice";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorMessage, SuccessMessage } from "./AlertMessage";
-
-import ListVideoSlice from "@/redux/ListVideoSlice/ListVideoSlice";
-import { fetchVideoTrending } from "@/redux/VideoTrendingSlice/actions";
-import { deleteVideo } from "@/redux/VideoTrendingSlice/VideoTrendingSlice";
+import { SkeletonTicket } from "./SkeletonUI";
+import { fetchChanelInfo } from "@/redux/ChanelInfoSlice/actions";
+import { deletelatestVideo } from "@/redux/ChanelInfoSlice/ChanelInfoSlice";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SkeletonTicket } from "./SkeletonUI";
 
-function ListTicket() {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchVideoTrending());
-    }, [dispatch]);
-
-    const { data, isLoading } = useSelector((state) => state.videoTrending);
-    const listVideo = useSelector((state) => state.ListVideo.data);
-
+function ListVideoChanel() {
     const [message, setMessage] = useState(null);
     const [messageError, setMessageError] = useState({
         state: null,
         testId: false,
     });
 
+    const { authorId } = useSelector((state) => state.ListVideo.init);
+    const { data: listVideo } = useSelector((state) => state.ListVideo);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchChanelInfo(authorId));
+    }, [dispatch, authorId]);
+
+    const {
+        data: { latestVideos },
+        isLoading,
+        error,
+    } = useSelector((state) => state.ChanelInfo);
+
     const handleClick = (item) => {
         const testId = listVideo.some((elemet) => {
             return elemet.videoId === item.videoId;
         });
+
         if (testId) {
             setMessageError({ state: item.videoId, testId: testId });
             setTimeout(() => {
@@ -37,29 +43,28 @@ function ListTicket() {
             }, 1000);
             return;
         }
-        dispatch(ListVideoSlice.actions.addVideo(item));
         setMessage(item.videoId);
+        dispatch(ListVideoSlice.actions.addVideo(item));
         setTimeout(() => {
             setMessage(null);
         }, 1000);
     };
-
     const handleDeleteVideo = (id) => {
-        dispatch(deleteVideo(id.videoId));
+        dispatch(deletelatestVideo(id.videoId));
     };
 
-    if (!Array.isArray(data)) return null;
     if (isLoading) return <SkeletonTicket />;
-
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
     return (
         <>
-            {data.map((item) => (
+            {latestVideos?.map((item) => (
                 <div key={item.videoId}>
                     {messageError.testId && messageError.state === item.videoId && (
                         <ErrorMessage message={"Video này đã được thêm...!"} />
                     )}
                     {message === item.videoId && <SuccessMessage message={"Đã thêm vào danh sách phát...!"} />}
-
                     <div
                         className={`relative h-[84px] mt-[20px] ml-[19px] font-robert flex bg-bgitems rounded-[8px]`}
                         style={{ width: `343px` }}
@@ -95,4 +100,4 @@ function ListTicket() {
     );
 }
 
-export default ListTicket;
+export default ListVideoChanel;
